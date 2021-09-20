@@ -1,1 +1,54 @@
+import matplotlib.pyplot as plt
+import random
+import math
+plt.xlabel("Days")
+plt.ylabel("Stock Value")
+def stockchange(mean, standarddeviation, performance, legend):
+    xaxis=[]
+    yaxis=[]
+    stock_value=1000000
+    day=0
+    while (day<=260):
+      xaxis.append(day)
+      yaxis.append(stock_value)
+      x1=random.uniform(0,1)
+      x2=random.uniform(0,1)
+      g1=math.sqrt(-2*math.log(x1,math.e))*math.cos(2*math.pi*x2)
+      g2=math.sqrt(-2*math.log(x1,math.e))*math.sin(2*math.pi*x2)
+      z1=mean+(g1*standarddeviation)
+      z2=mean+(g2*standarddeviation)
+      if (z1>0):
+        gain=stock_value*z1
+        performance_fee=gain*performance
+        stock_value=stock_value+gain-performance_fee
+      elif(z1<=0):
+        loss=abs(stock_value*z1)
+        stock_value=stock_value-loss
+      day+=1
+    plt.plot(xaxis,yaxis,label=legend)
+    plt.legend()
+    plt.show()
+    return stock_value
+
+
+
+    
+
+stockchange(.002021, .001984,.011, "Mean is .002021 with performance fee")
+stockchange(-0.002021, .004444,.011,"Mean is -.002021 with performance fee")
+stockchange(.002021, .001984,0,"Mean is .002021 with no performance fee")
+stockchange(-0.002021, .004444,0, "Mean is -.002021 with no performance fee")
+
+
+'''i=0
+x=0
+y=0
+while(i<1000):
+    x=x+(stockchange(.002021,.001984,0))
+    y=y+(stockchange(.002021, .001984,.011))
+    i=i+1
+    
+print(x)
+print(y)'''
+
 
